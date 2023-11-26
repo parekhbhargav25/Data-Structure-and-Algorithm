@@ -71,12 +71,68 @@ class LinkedList:
             self.tail = None
         return temp
     def get (self, index):
-        if index < 0 or index == self.length:
+        if index < 0 or index > self.length:
             return None
         temp = self.head
         for _ in range (index):
             temp = temp.next
         return temp
+    def set_value (self, index, value):
+        temp = self.get(index)
+        if temp is not None:
+            temp.value = value
+            return True
+        return False
+    def insert(self, index,value ):
+        
+        if index < 0 or index > self.length:
+            return False
+        if index == 0:
+            return self.prepend(value)
+        if index == self.length:
+            return self.append(value)
+        
+        new_node = Node(value)
+        temp = self.get(index -1) 
+        new_node.next = temp.next
+        temp.next = new_node
+        self.length +=1
+        return True
+    def remove (self,index):
+        if index < 0 or index > self.length:
+            return False
+        if index == 0:
+            return self.PopFirst()
+        if  index == self.length:
+            return self.pop()
+        # temp = self.get(index)
+        pre = self.get(index - 1)
+        temp = pre.next
+        pre.next = temp.next
+        temp.next = None
+        self.length -= 1
+        return temp
+    
+    def reverse(self):
+       temp = self.head
+       self.head = self.tail
+       self.tail = temp
+
+       after = temp.next
+       before = None
+
+       for _ in range (self.length):
+           after = temp.next
+           temp.next = before
+           before = temp
+           temp = after
+
+
+
+
+
+
+
         
         
 
@@ -87,10 +143,19 @@ class LinkedList:
 
 myLinked_list = LinkedList(1)
 myLinked_list.append(2)
+myLinked_list.append(3)
+myLinked_list.append(4)
+myLinked_list.append(5)
 
+# myLinked_list.printList()
 
-myLinked_list.prepend(5)
+myLinked_list.set_value(2,10)
+# myLinked_list.printList()
 
+myLinked_list.insert(2,15)
+
+myLinked_list.remove(3)
+myLinked_list.printList()
 
 
         
